@@ -1,3 +1,6 @@
 .venv
 .env
 .env.k8s
+azure/*
+*.md
+*.ipynb

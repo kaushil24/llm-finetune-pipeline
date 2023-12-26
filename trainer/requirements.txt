@@ -1,0 +1,13 @@
+trl
+torch==2.1.1
+datasets
+pandas
+peft
+pathlib2
+praw
+pymongo
+python-decouple
+certifi
+# azure
+azure-storage-blob
+Flask

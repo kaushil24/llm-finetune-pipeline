@@ -1,0 +1,19 @@
+airflow:
+  dags_image:
+    # repository: localhost:5001/customllm_airflow     # repository URL
+    repository: customllmreg.azurecr.io/customllm_airflow     # repository URL
+    tag: latest                                      # airflow dags image version
+    pull_policy: Always                             # change this to `Always` if changes applied on same tagged image.
+    pull_secret: img-pull-sec-1
+  webserver:
+    username: admin
+    password: "12345678"
+    secret_key: topsecret
+  configs:
+    fernet_key: 9jgWYeShQAYRS5E4Gu_n9GoGAuml4n50IpS-jifVqdA=
+
+mysql:
+  host: mysql
+  username: airflow
+  database: airflow
+  password: "12345678"
