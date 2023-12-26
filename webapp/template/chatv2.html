@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Custom LLM Chatbot</title>
+    <!-- Add the Font Awesome CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #282c34;
+            color: #abb2bf;
+            text-align: center;
+        }
+
+        .chat-container {
+            max-width: 800px;
+            margin: 20px auto;
+            border: 1px solid #444;
+            border-radius: 8px;
+            overflow: hidden;
+            background-color: #1e2127;
+        }
+
+        .chat-box {
+            height: 500px;
+            overflow-y: scroll;
+            padding: 20px;
+            background-color: #282c34;
+            text-align: left;
+        }
+
+        .user-message, .bot-message {
+            margin-bottom: 20px;
+            display: flex;
+            align-items: flex-start;
+        }
+
+        .user-message .message-icon, .bot-message .message-icon {
+            margin-right: 10px;
+            color: #61dafb;
+        }
+
+        .user-message p, .bot-message p {
+            margin: 0;
+        }
+
+        .input-box {
+            padding: 20px;
+            background-color: #1e2127;
+            border-top: 1px solid #444;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        input[type="text"] {
+            flex: 1;
+            padding: 12px;
+            margin: 10px;
+            border: none;
+            border-radius: 5px;
+            color: #abb2bf;
+            background-color: #282c34;
+            outline: none;
+        }
+
+        .loading-cursor {
+            width: 10px;
+            height: 20px;
+            background-color: #61dafb;
+            animation: blink 1s infinite;
+            display: none;
+        }
+
+        @keyframes blink {
+            0%, 100% {
+                background-color: #61dafb;
+            }
+            50% {
+                background-color: transparent;
+            }
+        }
+
+        input[type="button"] {
+            padding: 12px;
+            margin: 10px;
+            background-color: #61dafb;
+            color: #282c34;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        input[type="button"]:hover {
+            background-color: #4fa3d1;
+        }
+
+        h1 {
+            margin: 20px 0;
+            font-size: 32px;
+            color: #61dafb;
+        }
+
+        p {
+            font-size: 18px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="chat-container">
+    <h1>Custom LLM Chatbot</h1>
+    <div class="chat-box" id="chatBox"></div>
+    <div class="input-box">
+        <input type="text" id="userInput" placeholder="Type your message...">
+        <div id="loadingCursor" class="loading-cursor"></div>
+        <input type="button" value="Send" onclick="sendMessage()">
+    </div>
+</div>
+
+<script>
+    function showLoadingCursor() {
+        document.getElementById("loadingCursor").style.display = "inline-block";
+    }
+
+    function hideLoadingCursor() {
+        document.getElementById("loadingCursor").style.display = "none";
+    }
+
+    function appendUserMessage(message) {
+        const chatBox = document.getElementById("chatBox");
+        const userMessage = document.createElement("div");
+        userMessage.className = "user-message";
+        userMessage.innerHTML = '<i class="fas fa-user message-icon"></i><p>' + message + '</p>';
+        chatBox.appendChild(userMessage);
+    }
+
+    function appendBotMessage(message) {
+        const chatBox = document.getElementById("chatBox");
+        const botMessage = document.createElement("div");
+        botMessage.className = "bot-message";
+        botMessage.innerHTML = '<i class="fas fa-robot message-icon"></i><p>' + message + '</p>';
+        chatBox.appendChild(botMessage);
+        hideLoadingCursor();
+    }
+
+    function sendMessage() {
+        const userInput = document.getElementById("userInput");
+        const userMessage = userInput.value.trim();
+
+        if (userMessage !== "") {
+            showLoadingCursor();
+            appendUserMessage(userMessage);
+
+            // Send the user message to the backend
+            fetch('/generate', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                body: `prompt=${encodeURIComponent(userMessage)}`,
+            })
+            .then(response => response.json())
+            .then(data => {
+                const botResponse = data.response;
+                appendBotMessage(botResponse);
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                hideLoadingCursor();
+            });
+
+            // Clear the input field
+            userInput.value = "";
+        }
+    }
+</script>
+
+</body>
+</html>

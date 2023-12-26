@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chatbot</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+
+        .chat-container {
+            max-width: 600px;
+            margin: 20px auto;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            overflow: hidden;
+        }
+
+        .chat-box {
+            height: 400px;
+            overflow-y: scroll;
+            padding: 10px;
+            background-color: #fff;
+        }
+
+        .user-message, .bot-message {
+            margin-bottom: 10px;
+        }
+
+        .input-box {
+            padding: 10px;
+            background-color: #f0f0f0;
+            border-top: 1px solid #ccc;
+        }
+
+        input[type="text"] {
+            width: calc(100% - 20px);
+            padding: 8px;
+            margin: 5px 0;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+        }
+
+        input[type="button"] {
+            padding: 8px;
+            margin: 5px 0;
+            background-color: #4caf50;
+            color: #fff;
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+
+<div class="chat-container">
+    <div class="chat-box" id="chatBox"></div>
+    <div class="input-box">
+        <input type="text" id="userInput" placeholder="Type your message...">
+        <input type="button" value="Send" onclick="sendMessage()">
+    </div>
+</div>
+
+<script>
+    function appendUserMessage(message) {
+        const chatBox = document.getElementById("chatBox");
+        const userMessage = document.createElement("div");
+        userMessage.className = "user-message";
+        userMessage.textContent = "You: " + message;
+        chatBox.appendChild(userMessage);
+    }
+
+    function appendBotMessage(message) {
+        const chatBox = document.getElementById("chatBox");
+        const botMessage = document.createElement("div");
+        botMessage.className = "bot-message";
+        botMessage.textContent = "Bot: " + message;
+        chatBox.appendChild(botMessage);
+    }
+
+    function sendMessage() {
+        const userInput = document.getElementById("userInput");
+        const userMessage = userInput.value.trim();
+
+        if (userMessage !== "") {
+            appendUserMessage(userMessage);
+
+            // Send the user message to the backend
+            fetch('/generate', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                body: `prompt=${encodeURIComponent(userMessage)}`,
+            })
+            .then(response => response.json())
+            .then(data => {
+                const botResponse = data.response;
+                appendBotMessage(botResponse);
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+
+            // Clear the input field
+            userInput.value = "";
+        }
+    }
+</script>
+
+</body>
+</html>
