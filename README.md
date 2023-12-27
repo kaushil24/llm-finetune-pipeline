@@ -4,6 +4,8 @@
 
 This project is a data science pipeline designed to fetch data from Reddit on any topic, store it in MongoDB, preprocess the data into a question-answer format, and fine-tune a Hugging Face Language Model (LLM). The entire workflow is orchestrated using Apache Airflow and deployed on Kubernetes.
 
+![image info](./media/workflow.png)
+
 ## Features
 
 * **Decoupled Development and Deployment**: Data science team can exclusively focus on crafting and refining training scripts without worrying about deployment or infrastructure complexities.
@@ -47,7 +49,7 @@ This project is a data science pipeline designed to fetch data from Reddit on an
 
 5. Use this secret name in airflow's KubernetesPodOperator function and also in helm values.yaml
 
-### Workflow
+### Developement Workflow
 
 1. If you're changing the training code, you need to rebuild the image and push it to the container registery
 
