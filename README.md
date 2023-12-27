@@ -4,7 +4,7 @@
 
 This project is a data science pipeline designed to fetch data from Reddit on any topic, store it in MongoDB, preprocess the data into a question-answer format, and fine-tune a Hugging Face Language Model (LLM). The entire workflow is orchestrated using Apache Airflow and deployed on Kubernetes.
 
-![image info](https://github.com/kaushil24/llm-finetune-pipeline/blob/1903d9f3fedb85e9fdc52e373dd3de1a437f6b8c/media/workflow-compress.png)
+![image info](https://cdn.discordapp.com/attachments/1119444495071719497/1189534133639204954/workflow-compress.png?ex=659e82fd&is=658c0dfd&hm=3f6dba8a645b5d095b752498884d7dbb2f111c0b4e5a19f45b8e22db42158674&)
 
 ## Features
 
