@@ -6,6 +6,12 @@ This project is a data science pipeline designed to fetch data from Reddit on an
 
 ![image info](https://cdn.discordapp.com/attachments/1119444495071719497/1189534133639204954/workflow-compress.png?ex=659e82fd&is=658c0dfd&hm=3f6dba8a645b5d095b752498884d7dbb2f111c0b4e5a19f45b8e22db42158674&)
 
+### Pipeline
+![pipeline](https://media.discordapp.net/attachments/1119444495071719497/1192799066246094848/image.png?ex=65aa63b2&is=6597eeb2&hm=589a23f868255f97e7f7273a2d99d48fcb39fca7da5fced0a96da4218aacf898&=&format=webp&quality=lossless&width=1634&height=894)
+
+### Webapp
+![webapp](https://github.com/kaushil24/llm-finetune-pipeline/blob/626b4e4128e2bc4c3db65ca67bf0f813f730e1c0/media/Recorder.gif)
+
 ## Features
 
 * **Decoupled Development and Deployment**: Data science team can exclusively focus on crafting and refining training scripts without worrying about deployment or infrastructure complexities.
